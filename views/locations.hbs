@@ -1,0 +1,36 @@
+{{title}}
+
+<h1>Image Uploads</h1>
+    {{#if message}}
+        <div class="alert {{messageClass}} mt-4" role="alert">
+            {{message}}
+        </div>
+    {{/if}}
+
+  
+  <form action="/locations/upload" method="POST" enctype="multipart/form-data">
+    <label for="fname">Location Name *</label><br>
+    <input type="text" id="lname" name="locationName" required minlength="3"><br>
+    <div class="file-field input-field">
+
+      <div class="btn grey">
+        <span>File</span>
+        <input name="myImage" type="file" multiple>
+      </div>
+
+      <div class="file-path-wrapper">
+        <input class="file-path validate" type="text" placeholder="Upload one or more files">
+      </div>
+
+    </div>
+
+      <label for="description*">Description *</label><br>
+      <textarea id="msg" name="description" placeholder="Type your message here" style="height:200px" required></textarea><br>
+
+    <button type="submit" class="btn">Submit</button>
+  </form>
+  <br>
+  {{#if (isdefined file)}}
+  <img src="{{file}}" class="responsive-img"/>
+  {{/if}}
+

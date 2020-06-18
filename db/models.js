@@ -1,14 +1,3 @@
-const mongoose = require("mongoose");
+const locationSchema = require("./models/Locations.js")
 
-exports.Location = mongoose.model(
-  "Location",
-  {
-    name: String,
-    description: String,
-    isValidate: {
-      type: Boolean,
-      default: false,
-    },
-  },
-  "LocationJefTest"
-);
+
