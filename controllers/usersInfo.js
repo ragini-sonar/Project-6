@@ -15,11 +15,12 @@ module.exports = {
   },
 
   updateUser: (req, res) => {
-    // user: req.user;
     const { id } = req.params;
-    console.log("in update user", typeof id);
     const { fname, lname, email, password, c_password } = req.body;
-    if (fname) {
+    var x = /^[A-Za-z]+$/;
+
+    // Update first name
+    if (fname && fname.match(x)) {
       console.log("change first name", fname);
       User.updateOne({ _id: id }, { $set: { firstName: fname } }, function (
         err,
@@ -30,7 +31,8 @@ module.exports = {
       });
     }
 
-    if (lname) {
+    // Update last name
+    if (lname && lname.match(x)) {
       console.log("change last name", lname);
       User.update({ _id: id }, { $set: { lastName: lname } }, function (
         err,
@@ -41,7 +43,8 @@ module.exports = {
       });
     }
 
-    if (email) {
+    // Update email id
+    if (email && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       console.log("change email", email);
       User.update({ _id: id }, { $set: { email: email } }, (err, result) => {
         if (err) throw err;
@@ -49,25 +52,25 @@ module.exports = {
       });
     }
 
-    if (password) {
-      if (password == c_password) {
-        console.log("change password", password);
-        let hashedPassword = getHashedPassword(password);
-        User.update(
-          { _id: id },
-          { $set: { password: hashedPassword } },
-          function (err, result) {
-            if (err) throw err;
-            console.log(result);
-          }
-        );
-      } else {
-        res.render("users", {
-          messageClass: "alert-danger",
-          message: "Please Enter valid Password..",
-        });
-      }
+    // Update Passward
+    if (password && password.length > 4 && password == c_password) {
+      console.log("change password", password);
+      let hashedPassword = getHashedPassword(password);
+      User.update(
+        { _id: id },
+        { $set: { password: hashedPassword } },
+        function (err, result) {
+          if (err) throw err;
+          console.log(result);
+        }
+      );
+    } else {
+      res.render("users", {
+        messageClass: "alert-danger",
+        message: "Please Enter valid Password.. Minimum lenght is 5",
+      });
     }
+
     res.redirect("/users/:id");
   },
 };
