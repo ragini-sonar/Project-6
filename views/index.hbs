@@ -6,16 +6,23 @@
   <button onclick="location.href='/locations'" class="btn btn-primary"> Add New Location </button>
 </div>
 
-{{#if (isNotEmpty latestLocationsList)}}
-{{#each latestLocationsList}}
-<h1>{{ this.locationName}}</h1>
-<div class="row">
-  <br>
-  <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px" class="img-thumbnail img-responsive">
-  {{this.description}}
-  <br>
+<div class="input-group mb-5">
+  {{#if (isNotEmpty latestLocationsList)}}
+  {{#each latestLocationsList}}
+
+  <div class='loc-list' data-name={{this.locationName}}>
+    <h3>{{this.locationName}}</h3>
+    <div class="row">
+      <br>
+      <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px"
+        class="img-thumbnail img-responsive">
+      {{this.description}}
+      <br>
+    </div>
+  </div>
+
+  {{/each}}
+  {{else}}
+  <p>No images show</p>
+  {{/if}}
 </div>
-{{/each}}
-{{else}}
-<p>No images show</p>
-{{/if}}

@@ -4,15 +4,10 @@ const { requireAuth, unsetAuthToken } = require("../controllers/auth");
 const controllers_regi = require("../controllers/registration");
 const controllers_login = require("../controllers/login");
 const controllers_user = require("../controllers/usersInfo");
+const controllers_home = require("../controllers/home");
 locationsModels = require("../db/models").Locations;
 
-router.get("/", async function (req, res, next) {
-  const latestLocationsList = await locationsModels.getLatestLocations();
-  res.render("index", {
-    latestLocationsList: latestLocationsList,
-    user: req.user,
-  });
-});
+router.get("/", controllers_home.homePage);
 
 router.get("/login", controllers_login.getLogin);
 
