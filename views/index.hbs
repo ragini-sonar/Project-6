@@ -1,17 +1,21 @@
+<div class="input-group mb-5">
+  <input type="text" id="searchLocation" class="form-control mr-5" placeholder="Search for a location...">
+</div>
 
-
-<h1> Travel and tours listing</h1>
+<div class="input-group mb-5">
+  <button onclick="location.href='/locations'" class="btn btn-primary"> Add New Location </button>
+</div>
 
 {{#if (isNotEmpty latestLocationsList)}}
-  {{#each latestLocationsList}}
-      <h1>{{ this.locationName}}</h1>
-      <div class="row">
-        <br>
-          <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px" class="img-thumbnail img-responsive" >
-          {{this.description}}
-        <br>
-      </div>
-  {{/each}}
+{{#each latestLocationsList}}
+<h1>{{ this.locationName}}</h1>
+<div class="row">
+  <br>
+  <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px" class="img-thumbnail img-responsive">
+  {{this.description}}
+  <br>
+</div>
+{{/each}}
 {{else}}
 <p>No images show</p>
 {{/if}}
