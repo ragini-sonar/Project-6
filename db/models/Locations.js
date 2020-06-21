@@ -15,9 +15,9 @@ var locationsSchema = new Schema({
         default: false
     },
     image:{
-        data: Buffer,
+        data: String,
         contentType: String
     }
 });
 
-module.exports = mongoose.model('Locations', locationsSchema);
+module.exports = mongoose.model('Locations', locationsSchema,'locations');

@@ -1,0 +1,17 @@
+
+
+<h1> Travel and tours listing</h1>
+
+{{#if (isNotEmpty latestLocationsList)}}
+  {{#each latestLocationsList}}
+      <h1>{{ this.locationName}}</h1>
+      <div class="row">
+        <br>
+          <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px" class="img-thumbnail img-responsive" >
+          {{this.description}}
+        <br>
+      </div>
+  {{/each}}
+{{else}}
+<p>No images show</p>
+{{/if}}

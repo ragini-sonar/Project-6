@@ -22,8 +22,15 @@ const hbs = exphbs.create({
   // create custom helpers
   helpers: {
     isdefined: function (file) {
+      console.log(file)
       return file !== undefined;
     },
+    isNotEmpty: function (array){
+      delete this['settings']
+      delete this['_locals']
+      delete this['cache']
+      return Object.keys(array).includes('0')
+    }
   },
 });
 // view engine setup
