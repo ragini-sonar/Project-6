@@ -8,20 +8,22 @@
 
 <div class="input-group mb-5">
   {{#if (isNotEmpty latestLocationsList)}}
-  {{#each latestLocationsList}}
-
-  <div class='loc-list' data-name={{this.locationName}}>
-    <h3>{{this.locationName}}</h3>
-    <div class="row">
-      <br>
-      <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px"
-        class="img-thumbnail img-responsive">
-      {{this.description}}
-      <br>
-    </div>
-  </div>
-
-  {{/each}}
+    {{#each latestLocationsList}}
+      {{#if (isValid this.isValid)}}
+        <div class='loc-list' data-name={{this.locationName}}>
+          <h3>{{this.locationName}}</h3>
+          <div class="row">
+            <br>
+            <a href= "/locations/{{this._id}}">
+              <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px"
+                class="img-thumbnail img-responsive">
+            </a>
+            {{this.description}}
+            <br>
+          </div>
+        </div>
+      {{/if}}
+    {{/each}}
   {{else}}
   <p>No images show</p>
   {{/if}}

@@ -26,10 +26,14 @@ const hbs = exphbs.create({
       return file !== undefined;
     },
     isNotEmpty: function (array){
+      console.log(array)
       delete this['settings']
       delete this['_locals']
       delete this['cache']
       return Object.keys(array).includes('0')
+    },
+    isValid: function (value){
+      return value === true;
     }
   },
 });

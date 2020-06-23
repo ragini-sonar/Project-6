@@ -1,13 +1,15 @@
 var express = require("express");
 var router = express.Router();
 const upload = require("../controllers/upload");
+const { requireAuth } = require("../controllers/auth");
 const fs = require("fs");
 const path = require("path");
 locationsModels = require("../db/models").Locations;
 
-/* GET locations listing. */
+
 router.get("/", function (req, res, next) {
-  res.render("locations");
+  res.render("locations",{user:req.user});
+
 });
 
 router.post("/upload", (req, res) => {
@@ -27,6 +29,7 @@ router.post("/upload", (req, res) => {
         res.render("locations", {
           message: "File Uploaded Successfully!",
           file: `/uploads/${req.file.filename}`,
+          
         });
 
         // Store image path in database
@@ -43,10 +46,11 @@ router.post("/upload", (req, res) => {
         var item = {
           locationName: locationName,
           description: description,
+          isValid: false,
           image: image,
+          comments
         };
         locationsModels.addNewLocation(item);
-        // res.redirect('/')
       }
     }
   });

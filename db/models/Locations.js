@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-var Schema = mongoose.Schema;
 
-var locationsSchema = new Schema({
+var locationsSchema = mongoose.Schema({
     locationName:{
         type: String,
         required: true
@@ -16,8 +15,21 @@ var locationsSchema = new Schema({
     },
     image:{
         data: String,
-        contentType: String
+        contentType: String,
+    },
+    comments:{
+        type: String,
+        userName:{
+            type: String
+        },
+        comment:{
+            type: String
+        }
+    },
+    recommend:{
+        type: Number
     }
+
 });
 
 module.exports = mongoose.model('Locations', locationsSchema,'locations');

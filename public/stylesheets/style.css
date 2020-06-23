@@ -6,3 +6,14 @@ body {
 a {
   color: #00B7FF;
 }
+
+.fa {
+  font-size: 20px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.fa:hover{
+  color:rgb(0, 102, 255);
+}
+

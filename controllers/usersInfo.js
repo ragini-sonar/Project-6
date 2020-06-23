@@ -2,15 +2,14 @@ const { getHashedPassword } = require("./auth");
 var User = require("../db/models/users");
 
 module.exports = {
-  userInfo: (req, res) => {
-    User.find({ _id: req.user }, (err, userInfo) => {
-      res.render("users", {
-        firstName: userInfo[0].firstName,
-        lastName: userInfo[0].lastName,
-        email: userInfo[0].email,
-        user: req.user,
+  getUserInfo: (userId) => {
+    return new Promise((resolve, reject) =>{
+      User.find({ _id: userId }, (err, userInfo) => {
+            if(err)reject(err);
+            console.log("Userinfo: ",userInfo);
+            resolve(userInfo);
       });
-    });
+    })
   },
 
   updateUser: (req, res) => {
