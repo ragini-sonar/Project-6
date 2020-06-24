@@ -29,7 +29,7 @@ module.exports = {
     if (req.user) {
       next();
     } else {
-      return res.redirect("/login");
+      return res.redirect("/users/login");
     }
   },
 

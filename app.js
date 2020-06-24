@@ -1,10 +1,11 @@
 var express = require("express");
 const exphbs = require("express-handlebars");
+const Handlebars = require('handlebars');
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var dbConnection = require("./db/dbConnection");
 const auth = require("./controllers/auth");
-const multer = require("multer");
+const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -15,6 +16,8 @@ var app = express();
 dbConnection();
 
 const hbs = exphbs.create({
+
+  handlebars: allowInsecurePrototypeAccess(Handlebars),
   extname: ".hbs",
   defaultLayout: "main",
   layoutsDir: __dirname + "/views/layout",
@@ -22,24 +25,15 @@ const hbs = exphbs.create({
   // create custom helpers
   helpers: {
     isdefined: function (file) {
-      console.log(file)
       return file !== undefined;
     },
-    isNotEmpty: function (array){
-      console.log(array)
-      delete this['settings']
-      delete this['_locals']
-      delete this['cache']
-      return Object.keys(array).includes('0')
-    },
-    isValid: function (value){
+    isTrue: function (value){
       return value === true;
     }
   },
 });
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
-
 app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 
@@ -53,7 +47,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use((req, res, next) => {
   // Get auth token from the cookies
   const authToken = req.cookies["AuthToken"];
-  console.log("in app.js token", authToken);
+  // console.log("in app.js token", authToken);
   // Inject the user id into req.user
   req.user = auth.getSessionUser(authToken);
   console.log("in app.js user id", req.user);

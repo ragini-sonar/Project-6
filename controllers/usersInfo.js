@@ -6,7 +6,6 @@ module.exports = {
     return new Promise((resolve, reject) =>{
       User.find({ _id: userId }, (err, userInfo) => {
             if(err)reject(err);
-            console.log("Userinfo: ",userInfo);
             resolve(userInfo);
       });
     })

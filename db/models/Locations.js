@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+let mongoose = require("mongoose");
 
-var locationsSchema = mongoose.Schema({
+let locationsSchema = mongoose.Schema({
     locationName:{
         type: String,
         required: true
@@ -18,7 +18,7 @@ var locationsSchema = mongoose.Schema({
         contentType: String,
     },
     comments:{
-        type: String,
+        type:Object,
         userName:{
             type: String
         },
@@ -28,8 +28,8 @@ var locationsSchema = mongoose.Schema({
     },
     recommend:{
         type: Number
-    }
+    },
 
 });
 
-module.exports = mongoose.model('Locations', locationsSchema,'locations');
+module.exports = mongoose.model("Locations", locationsSchema, "Locations"); //module name, schema, database name

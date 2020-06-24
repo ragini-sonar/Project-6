@@ -2,9 +2,7 @@ var express = require("express");
 var router = express.Router();
 const upload = require("../controllers/upload");
 const { requireAuth } = require("../controllers/auth");
-const fs = require("fs");
-const path = require("path");
-locationsModels = require("../db/models").Locations;
+const Locations = require('../db/models/Locations');
 
 
 router.get("/", function (req, res, next) {
@@ -43,14 +41,24 @@ router.post("/upload", (req, res) => {
         };
 
         // Include title and description
-        var item = {
+        var item = new Locations({
           locationName: locationName,
           description: description,
           isValid: false,
           image: image,
-          comments
-        };
-        locationsModels.addNewLocation(item);
+          comments:  {
+            userName: "",
+            comment: ""
+          },
+          recommend:0
+        });
+           item.save(function (err) {
+            if(err){
+              console.log(err);
+              return;
+            }
+
+          });
       }
     }
   });
