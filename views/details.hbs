@@ -1,5 +1,5 @@
 
-{{#if (isNotEmpty locationDetails)}}
+{{#if (isdefined locationDetails)}}
     {{#each locationDetails}}
     <h1>{{ this.locationName}}</h1>
     <br>
@@ -7,32 +7,27 @@
     <br>
     {{this.description}}
     <br>
+
+    {{!-- {{#if user}} --}}
+        <i onclick="recommedButton()" class="fa fa-thumbs-up fa-3x" id="thumb" name="recommend" value="" ></i>
+
+        <script>const recommend = document.getElementById("thumb").value;
+                document.write(recommend);
+        </script>
+        <br>
+        <div id="addComment">
+            <form method="POST" id="formId">
+                <textarea id="comment" name="comment" placeholder="Leave comment here" style="width:600px" required></textarea><br>
+                <button type="submit" class="btn">post</button>
+            </form>
+        </div>
+    {{!-- {{/if}} --}}
+
+        <ul>
+            <li>{{this.comments.userName}} : {{this.comments.comment}}</li> 
+        </ul>
     {{/each}}
 {{else}}
     <p>No images show</p>
 {{/if}}
-
-{{!-- {{#if user}} --}}
-
-    <button type="button">
-        <i onclick="recommedButton()" class="fa fa-thumbs-up fa-3x" id="thumb" name="recommend" value="" ></i>
-    </button>
-    <script>const recommend = document.getElementById("thumb").value;
-            document.write(recommend);
-    </script>
-    <br>
-    <div class="comment-container">
-        <form method="POST" >
-            <textarea id="msg" name="comment" placeholder="Leave comment here" style="width:600px" required></textarea><br>
-            <button type="submit" class="btn">post</button>
-        </form>
-    </div>
-
-{{!-- {{/if}} --}}
-
-{{#each locationDetails}}
-    <ul>
-        <li>{{this.comments.userName}} : {{this.comments.comment}}</li> 
-    </ul>
-{{/each}}
 

@@ -7,14 +7,14 @@
 </div>
 
 <div class="input-group mb-5">
-  {{#if (isNotEmpty latestLocationsList)}}
+  {{#if (isdefined latestLocationsList)}}
     {{#each latestLocationsList}}
-      {{#if (isValid this.isValid)}}
+      {{#if (isTrue this.isValid)}}
         <div class='loc-list' data-name={{this.locationName}}>
           <h3>{{this.locationName}}</h3>
           <div class="row">
             <br>
-            <a href= "/locations/{{this._id}}">
+            <a href= "/details/{{this._id}}">
               <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px"
                 class="img-thumbnail img-responsive">
             </a>
@@ -22,6 +22,11 @@
             <br>
           </div>
         </div>
+        {{else}}
+        <br>
+        {{!-- <p>it is not valid</p> --}}
+
+        <br>
       {{/if}}
     {{/each}}
   {{else}}
