@@ -1,11 +1,10 @@
-var express = require('express');
+var express = require("express");
 var router = express.Router();
 const controllers_login = require("../controllers/login");
 const controllers_admin = require("../controllers/admin");
 const controllers_user = require("../controllers/usersInfo");
 const controllers_regi = require("../controllers/registration");
 const { requireAuth, unsetAuthToken } = require("../controllers/auth");
-
 
 router.get("/login", controllers_login.getLogin);
 
@@ -17,8 +16,11 @@ router.get("/registration", controllers_regi.getRegistration);
 
 router.post("/registration", controllers_regi.insertUserInfo);
 
-router.get("/:id", requireAuth, async function(req, res){
-  
+router.get("/admin", requireAuth, controllers_admin.getAdminPage);
+
+router.post("/admin", requireAuth, controllers_admin.validateLocation);
+
+router.get("/:id", requireAuth, async function (req, res) {
   const userInfo = await controllers_user.getUserInfo(req.user);
   res.render("users", {
     firstName: userInfo[0].firstName,
@@ -26,15 +28,8 @@ router.get("/:id", requireAuth, async function(req, res){
     email: userInfo[0].email,
     user: req.user,
   });
-})
+});
 
 router.post("/:id", requireAuth, controllers_user.updateUser);
-
-router.get(
-  "/admin",
-  requireAuth,
-  controllers_admin.requireAdmin,
-  controllers_admin.getAdminPage
-);
 
 module.exports = router;

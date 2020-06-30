@@ -1,23 +1,44 @@
-var User = require("../db/models/users");
-var admin_id;
+const locationsModels = require("../db/models");
+const userInfo = require("../controllers/login");
+const Locations = require("../db/models/Locations");
 
 module.exports = {
-  requireAdmin: (req, res, next) => {
-    User.find({ _id: req.user }, (err, userInfo) => {
-      console.log(userInfo);
-      if (userInfo[0].role == undefined || !userInfo[0].role === "admin") {
-        console.log("not admin");
-        res.send("you are not admin");
-      } else {
-        next();
-      }
+  getAdminPage: async (req, res) => {
+    const latestLocationsList = await locationsModels.getLatestLocations();
+    const userDetails = await userInfo.getUser(req, res);
+    const admin = userDetails[0].isAdmin;
+
+    res.render("admin", {
+      latestLocationsList: latestLocationsList,
+      user: req.user,
+      isAdmin: admin,
     });
   },
 
-  getAdminPage: (req, res) => {
-    res.render("admin", {
-      user: req.id,
-      admin: admin_id,
-    });
+  validateLocation: (req, res) => {
+    console.log("in validate location");
+    const { id, action } = req.body;
+    if (action == "accept") {
+      Locations.updateOne({ _id: id }, { $set: { isValid: true } }, function (
+        err,
+        result
+      ) {
+        console.log("In accept");
+        if (err) throw err;
+        res.send({
+          messageClass: "alert-success",
+          message: "Your location is submitted successfully ✅",
+        });
+      });
+    } else {
+      Locations.deleteOne({ _id: id }, function (err, result) {
+        console.log("In reject");
+        if (err) throw err;
+        res.send({
+          messageClass: "alert-danger",
+          message: "❌ Location removed!",
+        });
+      });
+    }
   },
 };

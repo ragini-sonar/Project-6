@@ -1,20 +1,58 @@
+<script>
 
-
-    <script>
-
-        function recommedButton() {
-            var recommend = document.getElementById("thumb");
-            console.log("the value ...",recommend.value )
-            if(recommend.value === undefined){
-                recommend.value = "1";
-                recommend.style.color = "#0066FF";
-
-            }else if(recommend.value = "1"){
-                recommend.value = undefined;
-                recommend.style.color = "black";
+    // Search Bar
+    $(document).ready(function () {
+        $("#searchLocation").on("keyup", function (e) {
+            // get search value in input
+            let input = e.target.value;
+            input = input.toLowerCase();
+            // get list of locations in locations
+            let locations = document.getElementsByClassName('allLocations');
+            // check if location name (data-name) includes input value through list of locations
+            for (i = 0; i < locations.length; i++) {
+                if (!locations[i].getAttribute('data-name').toLowerCase().includes(input)) {
+                    locations[i].style.display = "none";
+                }
+                else {
+                    locations[i].style.display = "list-item";
+                }
             }
-        }
-        
-    </script>
+        })
+    })
 
-    
+    // Accept Reject Buttons 
+    $('.button').click(function (e) {
+        $.ajax({
+            url: "/users/administrator",
+            type: "POST",
+            data: {
+                id: e.currentTarget.id,
+                action: e.currentTarget.name,
+            },
+            success: function (data) {
+                document.getElementById("admin-container").innerHTML = data.message;
+                console.log("success");
+                window.location.reload(true);
+            },
+            error: function (data) {
+                document.getElementsById("container").innerHTML = data.responseText;
+                console.log("error");
+                window.location.reload(true);
+            }
+        });
+    });
+
+    function recommedButton() {
+        var recommend = document.getElementById("thumb");
+        console.log("the value ...", recommend.value)
+        if (recommend.value === undefined) {
+            recommend.value = "1";
+            recommend.style.color = "#0066FF";
+
+        } else if (recommend.value = "1") {
+            recommend.value = undefined;
+            recommend.style.color = "black";
+        }
+    }
+
+</script>

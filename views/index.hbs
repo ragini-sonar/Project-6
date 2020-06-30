@@ -7,28 +7,28 @@
 </div>
 
 <div class="input-group mb-5">
-  {{#if (isdefined latestLocationsList)}}
-    {{#each latestLocationsList}}
-      {{#if (isTrue this.isValid)}}
-        <div class='loc-list' data-name={{this.locationName}}>
-          <h3>{{this.locationName}}</h3>
-          <div class="row">
-            <br>
-            <a href= "/details/{{this._id}}">
-              <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px"
-                class="img-thumbnail img-responsive">
-            </a>
-            {{this.description}}
-            <br>
-          </div>
-        </div>
-        {{else}}
-        <br>
-        {{!-- <p>it is not valid</p> --}}
 
-        <br>
-      {{/if}}
+  {{#if (isdefined latestLocationsList)}}
+
+  <table>
+    {{#each latestLocationsList}}
+    {{#if (isTrue this.isValid)}}
+    <tr class="allLocations" data-name={{this.locationName}}>
+      <td>
+        <a href="/details/{{this._id}}">
+          <img src="/uploads/{{this.image.data}}" alt="couldnt show images" width="400px"
+            class="img-thumbnail img-responsive">
+        </a>
+      </td>
+      <td>
+        <h3 class="input-group m-3"> {{this.locationName}} </h3>
+        <p class="input-group m-3"> {{this.description}} </p>
+      </td>
+    </tr>
+    {{/if}}
     {{/each}}
+  </table>
+
   {{else}}
   <p>No images show</p>
   {{/if}}
