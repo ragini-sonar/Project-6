@@ -1,11 +1,11 @@
 const locationsModels = require("../db/models");
-const userInfo = require("../controllers/login");
+const userInfo = require("../controllers/usersInfo");
 const Locations = require("../db/models/Locations");
 
 module.exports = {
   getAdminPage: async (req, res) => {
     const latestLocationsList = await locationsModels.getLatestLocations();
-    const userDetails = await userInfo.getUser(req, res);
+    const userDetails = await userInfo.getUserInfo(req.user);
     const admin = userDetails[0].isAdmin;
 
     res.render("admin", {

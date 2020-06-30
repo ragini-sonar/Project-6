@@ -34,14 +34,4 @@ module.exports = {
     unsetAuthToken(req.cookies["AuthToken"]);
     res.redirect("/");
   },
-
-  getUser: (req, res) => {
-    return new Promise((resolve, reject) => {
-      User.find({ _id: req.user }, (err, result) => {
-        if (err) reject(err);
-        console.log(result);
-        resolve(result);
-      });
-    });
-  },
 };
