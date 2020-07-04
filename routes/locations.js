@@ -44,13 +44,7 @@ router.post("/upload", (req, res) => {
         var item = new Locations({
           locationName: locationName,
           description: description,
-          isValid: false,
           image: image,
-          comments:  {
-            userName: "",
-            comment: ""
-          },
-          recommend:0
         });
            item.save(function (err) {
             if(err){

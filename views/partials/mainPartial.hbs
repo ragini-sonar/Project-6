@@ -42,17 +42,78 @@
         });
     });
 
-    function recommedButton() {
-        var recommend = document.getElementById("thumb");
-        console.log("the value ...", recommend.value)
-        if (recommend.value === undefined) {
+    function recommendButton() {
+        var recommend = document.getElementById("recommend");
+        console.log("the value ...",recommend.value )
+        if(recommend.value == "0"){
             recommend.value = "1";
+            recommend.title = "I don't recommend this"
             recommend.style.color = "#0066FF";
 
-        } else if (recommend.value = "1") {
-            recommend.value = undefined;
+        }else if(recommend.value == "1"){
+            recommend.value = "0";
+            recommend.title = "I recommend this";
             recommend.style.color = "black";
         }
-    }
+    } 
+
+ 
+    $(document).ready(function(){
+        $(document).on('submit','#formId', function(e){
+            e.preventDefault();
+            var comment = $('textarea#comment').val();
+            var id = $(this).data('id');
+
+            $.ajax({
+                    url: '/details/'+id,
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    data: JSON.stringify({"comment":comment}),
+                    type: "POST",
+                    success: function (data){
+                      $('.container').load('/details/'+id,data.userName, function(responseTxt, statusTxt, jqXHR){
+                                if(statusTxt == "success"){
+
+                                }
+                                if(statusTxt == "error"){
+                                    alert("Error: " + jqXHR.status + " " + jqXHR.statusText);
+                                }
+                            });
+
+                    },
+                    error: function(xhr, status, error){
+                        var err = eval("(" + xhr.responseText + ")");
+                        console.log(err.Message);
+
+                    }
+
+            });
+        });
+    })
+
+ 
+
+    $(function(){
+        $('#recommend').on('click', function(e){
+            e.preventDefault();
+            var recommend = $('#recommend').val();
+            console.log("Recommend value:",recommend)
+            var url = $(this).data('url');
+            $.ajax({
+                url:url,
+                dataType:'json',
+                contentType:'application/json',
+                data: JSON.stringify({"recommend":recommend}),
+                type:"POST",
+                success: function(data){
+                    $('#getTotalRecommend').html(data.totalRecommend)
+                },
+                error: function(err){
+                    console.log(err);
+                }
+            })
+
+        })
+    })
 
 </script>

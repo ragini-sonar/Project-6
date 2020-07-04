@@ -11,9 +11,29 @@ a {
   font-size: 20px;
   cursor: pointer;
   user-select: none;
+  padding: 0;
+  border: none;
+  background: none;
+}
+.fa:focus{
+  outline: none;
+  padding: 0;
+  border: none;
+  background: none;
 }
 
 .fa:hover{
   color:rgb(0, 102, 255);
 }
+
+.user_name{
+  font-size:14px;
+  font-weight: bold;
+}
+.comments-list .media{
+  border-bottom: 1px dotted #ccc;
+  padding: 10px 0px 10px ;
+
+}
+
 

@@ -17,19 +17,20 @@ let locationsSchema = mongoose.Schema({
         data: String,
         contentType: String,
     },
-    comments:{
-        type:Object,
+    comments:[{
         userName:{
             type: String
         },
         comment:{
             type: String
         }
-    },
-    recommend:{
-        type: Number
-    },
+    }],
+    recommend:[{
+        userId:{
+            type:String
+        }
+    }],
 
 });
 
-module.exports = mongoose.model("Locations", locationsSchema, "Locations"); //module name, schema, database name
+module.exports = mongoose.model("Locations", locationsSchema, "L2"); //module name, schema, database name

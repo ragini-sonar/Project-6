@@ -7,27 +7,53 @@
     <br>
     {{this.description}}
     <br>
-
-    {{!-- {{#if user}} --}}
-        <i onclick="recommedButton()" class="fa fa-thumbs-up fa-3x" id="thumb" name="recommend" value="" ></i>
-
-        <script>const recommend = document.getElementById("thumb").value;
-                document.write(recommend);
-        </script>
+        <button onclick="recommendButton()" class="fa fa-thumbs-up fa-2x" id="recommend" name="recommend" title="I like this" value = "0" data-url="/details/{{this._id}}" ></button>
+        <div id="getTotalRecommend">{{this.recommend.length}}</div>
         <br>
-        <div id="addComment">
-            <form method="POST" id="formId">
-                <textarea id="comment" name="comment" placeholder="Leave comment here" style="width:600px" required></textarea><br>
-                <button type="submit" class="btn">post</button>
-            </form>
-        </div>
-    {{!-- {{/if}} --}}
-
-        <ul>
-            <li>{{this.comments.userName}} : {{this.comments.comment}}</li> 
-        </ul>
-    {{/each}}
+        <form method="POST" id="formId" data-id={{this._id}}>
+            <textarea id="comment" name="comment" placeholder="Leave comment here" style="width:600px" required></textarea><br>
+            <button type="submit" class="btn">post</button>
+        </form>
+               
+     {{/each}}
 {{else}}
     <p>No images show</p>
-{{/if}}
+{{/if}}                   
+            
+    <div class="container">
+            <div class="row">
+                <div class="col-md-8">
+                  <div class="page-header">
+                    <h1><small class="pull-right">{{totalComment}} comments</small> Comments </h1>
+                  </div> 
+                 {{#if (isdefined locationDetails)}}
+                    {{#each locationDetails}}      
+                    <div class="comments-list">
+                       {{#each comments}} 
+                       <div class="media">
+                           <p class="pull-right"><small>5 days ago</small></p>
+                            <a class="media-left ml-3" href="#">
+                              <img src="/image/userlogo.png">
+                            </a>
+                            <div class="media-body ml-3">
+                              <h4 class="media-heading user_name">{{userName}}</h4>
+                              <div id="newcomment"></div>{{comment}} 
+                            </div>
+                          </div><!--end of media-->
+                        {{/each}}  
+                      </div> <!--end of comment-list-->
+                    {{/each}}
+                  {{/if}} 
+                    <div class="getNewComment">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
 
